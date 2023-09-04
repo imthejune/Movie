@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Movie.Models.MovieList>
+
+@{
+    ViewData["Title"] = "Movie index";
+}
+
+<h1>@ViewData["Title"]</h1>
+<table class="table">
+    <tr>
+        <th>รหัสภาพยนต์</th>
+        <th>ชื่อภาพยนต์</th>
+        <th>รูป</th>
+        <th>เข้าฉายเมื่อ</th>
+        <th>หมวดหมู่</th>
+        <th class="text-center">ความยาว (นาที)</th>
+        <th>แก้ไข</th>
+        <th>ลบ</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        string DateFormat = @item.ReleaseDate.HasValue
+        ? @item.ReleaseDate.Value.ToString("dd MMMM yyyy")
+        : "<not available>";
+        <tr>
+            <td>@item.MovieID</td>
+            <td>@item.MovieTitle</td>
+            <td>
+                <img src="@Url.Content(item.MovieImg)" height="80px" width="140px"/>
+            </td>
+            <td>@DateFormat</td>
+            <td>@item.Genre</td>
+            <td class="text-center">@item.Duration</td>
+            <td>
+                <a class="btn btn-primary" asp-controller="Movie" asp-action="Edit" asp-route-id="@item.MovieID" )">Edit</a>
+            </td>
+            <td>
+                <a class="btn btn-danger" asp-controller="Movie" asp-action="Delete" asp-route-id="@item.MovieID" onclick="return confirm('Do you really want to delete @item.MovieTitle ?')">Delete</a>
+            </td>
+        </tr>
+    } 
+</table>

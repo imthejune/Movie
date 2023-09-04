@@ -1,0 +1,91 @@
+﻿@model Movie.Models.MovieList;
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2 class="text-center">Edit</h2>
+@using (Html.BeginForm("Edit", "Movie", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group" hidden>
+        @Html.LabelFor(model => model.MovieID, "รหัสภาพยนตร์")
+        @Html.TextBoxFor(model => model.MovieID, new { @class = "form-control", placeholder = "รหัสภาพยนตร์" })
+        @Html.ValidationMessageFor(model => model.MovieID, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group" hidden>
+        @Html.LabelFor(model => model.MovieImg, "MovieImg")
+        @Html.TextBoxFor(model => model.MovieImg, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.MovieImg, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group" hidden>
+        @Html.LabelFor(model => model.CreateDate, "MovieImg")
+        @Html.TextBoxFor(model => model.CreateDate, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.CreateDate, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MovieTitle, "ชื่อภาพยนตร์")
+        @Html.TextBoxFor(model => model.MovieTitle, new { @class = "form-control", placeholder = "กรอกชื่อภาพยนตร์" })
+        @Html.ValidationMessageFor(model => model.MovieTitle, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ReleaseDate, "เข้าฉายเมื่อ")
+        <div class='input-group date' id='dtReleaseDate'>
+            @Html.TextBoxFor(model => model.ReleaseDate, new { @class = "form-control", placeholder = "กรอกเวลาเข้าฉาย" })
+            @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Genre, "หมวดหมู่")
+        @Html.DropDownListFor(m => m.Genre, new List<SelectListItem>
+    {
+    new SelectListItem { Text="Action", Value="Action" },
+    new SelectListItem { Text="Drama", Value="Drama" },
+    new SelectListItem { Text="Animation", Value="Animation" },
+    new SelectListItem { Text="Horror", Value="Horror" },
+    new SelectListItem { Text="Romance", Value="Romance" },
+    new SelectListItem { Text="Comedy", Value="Comedy" },
+    }, "กรุณาเลือก", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Duration, "ความยาว(นาที)")
+        @Html.TextBoxFor(model => model.Duration, new { @class = "form-control", placeholder = "กรอกความยาว(นาที)", type = "number" })
+        @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group my-2">
+        @Html.Label("fileCoverImg", "รูปภาพ")
+        <input type="file" id="fileUpload" name="fileUpload" class="form-control" />
+        <lable class="text-danger">
+            @Html.ValidationMessage("errFileUpload")
+        </lable>
+    </div>
+    <div class="form-group">
+        <img src="@Url.Content(Model.MovieImg)" class="img-fluid">
+    </div>
+    <div class=form-group>
+        <input onclick="return validateOnSubmit()" type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+}
+
+@section Scripts
+    {
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#dtReleaseDate').datetimepicker({
+                defaultDate: new Date(),
+            });
+        });
+    </script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+}

@@ -1,0 +1,59 @@
+﻿@model Movie.Models.MovieList;
+
+@{
+    ViewBag.Title = "addMovie";
+}
+
+<h2 class="text-center">Create</h2>
+@using (Html.BeginForm("addMovie", "Movie", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.MovieTitle, "ชื่อภาพยนตร์")
+        @Html.TextBoxFor(model => model.MovieTitle, new { @class = "form-control", placeholder = "กรอกชื่อภาพยนตร์" })
+        @Html.ValidationMessageFor(model => model.MovieTitle, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ReleaseDate, "เข้าฉายเมื่อ")
+        <div class='input-group date'>
+            @Html.TextBoxFor(model => model.ReleaseDate, new { @class = "form-control", type="date", placeholder = "กรอกเวลาเข้าฉาย" })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+            @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger"})
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Genre, "หมวดหมู่")
+        @Html.DropDownListFor(m => m.Genre, new List<SelectListItem>
+        {
+        new SelectListItem { Text="Action", Value="Action" },
+        new SelectListItem { Text="Drama", Value="Drama" },
+        new SelectListItem { Text="Animation", Value="Animation" },
+        new SelectListItem { Text="Horror", Value="Horror" },
+        new SelectListItem { Text="Romance", Value="Romance" },
+        new SelectListItem { Text="Comedy", Value="Comedy" },
+        }, "กรุณาเลือก", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Duration, "ความยาว(นาที)")
+        @Html.TextBoxFor(model => model.Duration, new { @class = "form-control", placeholder = "กรอกความยาว(นาที)", type = "number" })
+        @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group my-2">
+        @Html.Label("fileCoverImg", "รูปภาพ")
+        <input type="file" id="fileUpload" name="fileUpload" class="form-control" />
+        <lable class="text-danger">
+            @Html.ValidationMessage("errFileUpload")
+        </lable>
+    </div>
+    <div class=form-group>
+        <input onclick="return validateOnSubmit()" type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+}
+
+@section Scripts
+{
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+}
